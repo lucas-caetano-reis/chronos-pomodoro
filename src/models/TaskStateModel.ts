@@ -1,11 +1,13 @@
 import type { TaskModel } from "./TaskModel"
 
+// Estado -> Componente -> Filhos
+
 export type TaskStateModel = {
     tasks: TaskModel[]
     secondsRemaining: number
     formattedSecondsRemaining: string
     activeTask: TaskModel | null
-    currentCycle: number //1 a 8
+    currentCycle: number
     config: {
         workTime: number
         shortBreakTime: number
