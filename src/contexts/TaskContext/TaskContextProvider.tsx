@@ -1,6 +1,6 @@
 import { useEffect, useReducer } from "react"
 import { initialTaskState } from "./initialTaskState"
-import { TaskContext } from "./taskContext"
+import { TaskContext } from "./TaskContext"
 import { taskReducer } from "./taskReducer"
 
 type TaskContextProviderProps = {
