@@ -11,89 +11,89 @@ import { TaskActionTypes } from "../../contexts/TaskContext/taskActions";
 import { Tips } from "../Tips";
 
 export function MainForm() {
-    const {state, dispatch} = useTaskContext()
-    const taskNameInput = useRef<HTMLInputElement>(null)
+  const { state, dispatch } = useTaskContext();
+  const taskNameInput = useRef<HTMLInputElement>(null);
 
-    // Ciclos
-    const nextCycle = getNextCycle(state.currentCycle)
-    const nextCycleType = getNextCycleType(nextCycle)
+  // Ciclos
+  const nextCycle = getNextCycle(state.currentCycle);
+  const nextCycleType = getNextCycleType(nextCycle);
 
-    function handleCreateNewTask(event: React.SubmitEvent<HTMLFormElement>) {
-        event.preventDefault()
+  function handleCreateNewTask(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
 
-        if (taskNameInput.current === null) return
+    if (taskNameInput.current === null) return;
 
-        const taskName = taskNameInput.current.value.trim() //Remove espaços em uma string
+    const taskName = taskNameInput.current.value.trim(); //Remove espaços em uma string
 
-        if(!taskName) {
-            alert("Digite o nome da tarefa")
-            return
-        }
-
-        const newTask: TaskModel = {
-            id: Date.now().toString(),
-            name: taskName,
-            startDate: Date.now(),
-            completeDate: null,
-            interruptDate: null,
-            duration: state.config[nextCycleType],
-            type: nextCycleType,
-        }
-
-        dispatch({ type: TaskActionTypes.START_TASK, payload: newTask})
+    if (!taskName) {
+      alert("Digite o nome da tarefa");
+      return;
     }
 
-    function handleInterruptTask() {
-        dispatch({ type: TaskActionTypes.INTERRUPT_TASK})
-    }
+    const newTask: TaskModel = {
+      id: Date.now().toString(),
+      name: taskName,
+      startDate: Date.now(),
+      completeDate: null,
+      interruptDate: null,
+      duration: state.config[nextCycleType],
+      type: nextCycleType,
+    };
 
-    return (
-        <form onSubmit = {handleCreateNewTask} className='form' action=''>
-            <div className='formRow'>
-                <DefaultInput 
-                    labelText='task'
-                    id='meuInput'
-                    type='text'
-                    placeholder='Digite algo'
-                    ref={taskNameInput}
-                    disabled={!!state.activeTask} // Se houver uma task ativa
-                />
-            </div>
+    dispatch({ type: TaskActionTypes.START_TASK, payload: newTask });
+  }
 
-            <div className='formRow'>
-                <Tips />
-            </div>
+  function handleInterruptTask() {
+    dispatch({ type: TaskActionTypes.INTERRUPT_TASK });
+  }
 
-            {state.currentCycle > 0 && (
-                <div className='formRow'>
-                    <Cycles />
-                </div>
-            )}
+  return (
+    <form onSubmit={handleCreateNewTask} className="form" action="">
+      <div className="formRow">
+        <DefaultInput
+          labelText="task"
+          id="meuInput"
+          type="text"
+          placeholder="Digite algo"
+          ref={taskNameInput}
+          disabled={!!state.activeTask} // Se houver uma task ativa
+        />
+      </div>
 
-            <div className='formRow'>
-                {!state.activeTask && (
-                    <DefaultButton
-                        aria-label='Iniciar nova tarefa'
-                        title='Iniciar nova tarefa' 
-                        type='submit'
-                        icon={<PlayCircleIcon />}
-                        color='green'
-                        key='botao_submit'
-                    />
-                )}
-                
-                {!!state.activeTask &&(
-                    <DefaultButton
-                        aria-label='Interromper a tarefa'
-                        title='Interromper a tarefa' 
-                        type='button'
-                        icon={<StopCircleIcon />}
-                        color='red'
-                        onClick={handleInterruptTask}
-                        key='botao_button'
-                    />
-                )} 
-            </div>
-        </form>
-    )
+      <div className="formRow">
+        <Tips />
+      </div>
+
+      {state.currentCycle > 0 && (
+        <div className="formRow">
+          <Cycles />
+        </div>
+      )}
+
+      <div className="formRow">
+        {!state.activeTask && (
+          <DefaultButton
+            aria-label="Iniciar nova tarefa"
+            title="Iniciar nova tarefa"
+            type="submit"
+            icon={<PlayCircleIcon />}
+            color="green"
+            key="botao_submit"
+          />
+        )}
+
+        {!!state.activeTask && (
+          <DefaultButton
+            aria-label="Interromper a tarefa"
+            title="Interromper a tarefa"
+            type="button"
+            icon={<StopCircleIcon />}
+            color="red"
+            onClick={handleInterruptTask}
+            key="botao_button"
+          />
+        )}
+      </div>
+    </form>
+  );
 }

@@ -1,74 +1,82 @@
-import { HistoryIcon, HouseIcon, SettingsIcon, SunIcon, MoonIcon} from 'lucide-react'
-import { useState , useEffect } from 'react'
+import {
+  HistoryIcon,
+  HouseIcon,
+  SettingsIcon,
+  SunIcon,
+  MoonIcon,
+} from "lucide-react";
+import { useState, useEffect } from "react";
 
-import styles from './styles.module.css'
+import styles from "./styles.module.css";
 
-type AvailableThemes = 'dark' | 'light'
+type AvailableThemes = "dark" | "light";
 
 export function Menu() {
-    const [theme, setTheme] = useState<AvailableThemes>(() => {
-        const storageTheme = 
-            (localStorage.getItem('theme') as AvailableThemes) || 'dark'
-        return storageTheme
-    })
+  const [theme, setTheme] = useState<AvailableThemes>(() => {
+    const storageTheme =
+      (localStorage.getItem("theme") as AvailableThemes) || "dark";
+    return storageTheme;
+  });
 
-    const nextThemeIcon = {
-        dark: <SunIcon/>,
-        light: <MoonIcon/>
-    }
+  const nextThemeIcon = {
+    dark: <SunIcon />,
+    light: <MoonIcon />,
+  };
 
-    function handleThemeChange(
-        event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-    ) {
-        event.preventDefault()
+  function handleThemeChange(
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+  ) {
+    event.preventDefault();
 
-        setTheme(prevTheme => {
-            const nextTheme = prevTheme === 'dark' ? 'light' : 'dark'
-            return nextTheme
-        })
-    }
+    setTheme((prevTheme) => {
+      const nextTheme = prevTheme === "dark" ? "light" : "dark";
+      return nextTheme;
+    });
+  }
 
-    useEffect(() => {
-        document.documentElement.setAttribute('data-theme', theme)
-        localStorage.setItem('theme' , theme)
-    }, [theme])
-    
-    return <nav className={styles.menu}>
-        <a 
-            className={styles.menuLink} 
-            href='#' 
-            aria-label='Ir para a Home' 
-            title='Ir para a Home'
-        >
-            <HouseIcon />
-        </a>
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
-        <a 
-            className={styles.menuLink}
-            href='#'
-            aria-label='Ver Histórico'
-            title='Ver Histórico'
-        >
-            <HistoryIcon />
-        </a>
+  return (
+    <nav className={styles.menu}>
+      <a
+        className={styles.menuLink}
+        href="#"
+        aria-label="Ir para a Home"
+        title="Ir para a Home"
+      >
+        <HouseIcon />
+      </a>
 
-        <a 
-            className={styles.menuLink} 
-            href='#' 
-            aria-label='Configurações' 
-            title='Configurações'
-        >
-            <SettingsIcon />
-        </a>
+      <a
+        className={styles.menuLink}
+        href="#"
+        aria-label="Ver Histórico"
+        title="Ver Histórico"
+      >
+        <HistoryIcon />
+      </a>
 
-        <a 
-            className={styles.menuLink} 
-            href='#' 
-            aria-label='Mudar Tema' 
-            title='Mudar Tema'
-            onClick={handleThemeChange}
-        >
-            {nextThemeIcon[theme]}
-        </a>
+      <a
+        className={styles.menuLink}
+        href="#"
+        aria-label="Configurações"
+        title="Configurações"
+      >
+        <SettingsIcon />
+      </a>
+
+      <a
+        className={styles.menuLink}
+        href="#"
+        aria-label="Mudar Tema"
+        title="Mudar Tema"
+        onClick={handleThemeChange}
+      >
+        {nextThemeIcon[theme]}
+      </a>
     </nav>
+  );
 }
