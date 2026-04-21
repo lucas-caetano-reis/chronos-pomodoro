@@ -6,6 +6,7 @@ import {
   MoonIcon,
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { Link } from "react-router";
 
 import styles from "./styles.module.css";
 
@@ -41,14 +42,14 @@ export function Menu() {
 
   return (
     <nav className={styles.menu}>
-      <a
+      <Link
         className={styles.menuLink}
-        href="#"
+        to="/"
         aria-label="Ir para a Home"
         title="Ir para a Home"
       >
         <HouseIcon />
-      </a>
+      </Link>
 
       <a
         className={styles.menuLink}
